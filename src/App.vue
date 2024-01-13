@@ -16,7 +16,7 @@ export default {
       console.log(localStorage.getItem("apiKey"))
       const response = await axios({
         method: "get",
-        url: `https://financialmodelingprep.com/api/v3/etf-holder/${this.etfSymbol}&apikey=abc`,
+        url: `https://financialmodelingprep.com/api/v3/etf-holder/${this.etfSymbol}&apikey=redacted`,
         data: {
           // "apikey": localStorage.getItem("apiKey")
         }
