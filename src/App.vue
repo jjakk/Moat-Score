@@ -1,30 +1,25 @@
 <script>
-import { useToast } from "vue-toastification";
-import axios from "axios";
+import Settings from "./components/Settings.vue";
+import api from "./api";
 
 export default {
   name: "App",
+  data(){
+    return {
+      etfSymbol: null
+    };
+  },
   methods: {
-    setKey() {
-      const toast = useToast();
-
-      localStorage.setItem("apiKey", this.apiKey);
-      this.apiKey = null;
-      toast.success("API key set successfully!", { timeout: 2000 });
-    },
     async searchETF() {
       console.log(localStorage.getItem("apiKey"))
-      const response = await axios({
-        method: "get",
-        url: `https://financialmodelingprep.com/api/v3/etf-holder/${this.etfSymbol}&apikey=redacted`,
-        data: {
-          // "apikey": localStorage.getItem("apiKey")
-        }
-      });
+      const response = await api.get(`/etf-holder/${this.etfSymbol}`);
       console.log(response);
       this.etfSymbol = null;
       this.etfHoldings = [];
     }
+  },
+  components: {
+    Settings
   }
 }
 </script>
@@ -32,15 +27,7 @@ export default {
 <template>
   <main class="is-flex is-flex-direction-column gap-15 p-5">
     <h1 class="title m-0">Moat Score</h1>
-    <div class="is-flex is-flex-direction-row gap-15">
-      <input
-        type="text"
-        placeholder="Add financialmodelingprep.com API key"
-        class="input width-400"
-        v-model="apiKey"
-      >
-      <button class="button is-primary is-success" @click="setKey">Set</button>
-    </div>
+    <Settings/>
     <div class="is-flex is-flex-direction-row gap-15">
       <input
         type="text"
@@ -48,6 +35,7 @@ export default {
         class="input width-200"
         v-model="etfSymbol"
       >
+      <!-- <multiselect></multiselect> --> 
       <button class="button is-primary is-info" @click="searchETF">Search</button>
     </div>
     <!-- <ul>
@@ -56,5 +44,7 @@ export default {
   </main>
 </template>
 
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 </style>

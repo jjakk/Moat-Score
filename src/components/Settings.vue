@@ -2,7 +2,14 @@
 import { useToast } from "vue-toastification";
 
 export default {
+    data(){
+        return {
+            show: false,
+            apiKey: null
+        };
+    },
     methods: {
+        toggleShow() { this.show = !this.show },
         setKey() {
             const toast = useToast();
 
@@ -15,13 +22,22 @@ export default {
 </script>
 
 <template>
-    <div class="is-flex is-flex-direction-row gap-15">
-      <input
-        type="text"
-        placeholder="Add financialmodelingprep.com API key"
-        class="input width-400"
-        v-model="apiKey"
-      >
-      <button class="button is-primary is-success" @click="setKey">Set</button>
-    </div>
+    <main>
+        <a @click="toggleShow">{{ show ? "Hide" : "Show" }} Settings</a>
+        <ul
+            v-if="show"
+            class="box has-background-light is-shadowless mt-2 p-3"
+        >
+            <li class="is-flex is-flex-direction-row is-align-items-center gap-15">
+                <label>API Key</label>
+                <input
+                  type="text"
+                  placeholder="Add financialmodelingprep.com API key"
+                  class="input width-400"
+                  v-model="apiKey"
+                >
+                <button class="button is-primary is-success" @click="setKey">Set</button>
+            </li>
+        </ul>
+    </main>
 </template>
