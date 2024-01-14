@@ -13,7 +13,7 @@ export default {
         setKey() {
             const toast = useToast();
 
-            localStorage.setItem("apiKey", this.apiKey);
+            localStorage.setItem("apikey", this.apiKey);
             this.apiKey = null;
             toast.success("API key set successfully!", { timeout: 2000 });
         }
